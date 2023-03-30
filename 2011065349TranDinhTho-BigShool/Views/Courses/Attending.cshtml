@@ -1,8 +1,9 @@
 ﻿@model _2011065349TranDinhTho_BigShool.ViewModels.CoursesViewModel
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Attending";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<h2>Attending</h2>
 <div class="row">
     <ul class="course">
         @foreach (var course in Model.UpcommingCourses)
@@ -21,23 +22,14 @@
                         @course.Lecturer.Name
                         @if (Model.ShowAction)
                         {
-                            
-                            
-                                <button data-user-id="@course.LecturerId" class="btn btn-default btn-sm js-toggle-follow">Following?</button>
-                            
-                           
-
+                            <button data-user-id="@course.LecturerId" class="btn btn-default btn-sm js-toggle-follow">Follow?</button>
                         }
                     </span>
                     <span class="category">
                         @course.category.Name
                         @if (Model.ShowAction)
                         {
-                            
-                            
-                                <button data-course-id="@course.Id" class="btn btn-sm btn-info">Going?</button>
-                            
-                           
+                            <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
                         }
                     </span>
                 </div>
@@ -49,8 +41,7 @@
 </div>
 
 @section scripts{
-    <script>
-        $(function () {
+    <script>$(function () {
             $('.js-toggle-attendance').click(function (e) {
                 var button = $(e.target);
                 $.post("/api/attendances", { CourseId: button.attr("data-course-id") }).done(function () {
@@ -73,6 +64,5 @@
                     alert("Something failed");
                 });
             });
-        });
-    </script>
+        });</script>
 }
